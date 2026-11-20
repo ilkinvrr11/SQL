@@ -1,0 +1,68 @@
+-- TASK 1
+CREATE TABLE layiheler (
+    layihe_id   NUMBER(4)     PRIMARY KEY,
+    layihe_kodu CHAR(6),
+    layihe_adi  VARCHAR2(50),
+    budce       NUMBER(8,2)
+);
+-- TASK 2
+INSERT INTO layiheler (layihe_id, layihe_kodu, layihe_adi, budce)
+VALUES (1, 'ABC123', 'LAYIHE', 123456.789);
+SELECT * FROM layiheler;
+-- BURDA NUMBER(8,2) OLDUGUNA GORE .'DEN SONRA 2 REQEM SAXLAYIR VE AXIRINCI REQEMI YUVARLAQLASDIRIR
+
+--TASK 3
+select LENGTH(sobe_adi), VSIZE(sobe_adi) from sobeler
+where trim(sobe_adi) = 'IT'; 
+-- sobe adi CHAR(30) olduguna gore sobe adi nece herfli olursa olsun yenede 30 cixacaq
+
+--TASK 4
+SELECT isci_adi FROM isciler
+WHERE sobe_id IS NULL;
+
+--TASK 5
+SELECT s.sobe_adi from sobeler s
+WHERE EXISTS( SELECT 1 FROM isciler i WHERE i.sobe_id = s.sobe_id);
+
+--TASK 6
+SELECT sobe_adi from sobeler 
+where sobe_adi not in (select sobe_id from isciler);
+
+select sobe_adi from sobeler s
+where not exists(select 1 from isciler i where i.sobe_id = s.sobe_id);
+-- not in and ile islediyie gore null cavablarinda unknown cixanda cavabi sehv cixaracaq.
+
+-- TASK 7
+SELECT DEPARTMENT_NAME FROM HR.DEPARTMENTS D
+WHERE NOT EXISTS (SELECT 1 FROM HR.EMPLOYEES E WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID);
+
+-- TASK 8
+SELECT M.FIRST_NAME, M.LAST_NAME FROM HR.EMPLOYEES M
+WHERE EXISTS (SELECT 1 FROM HR.EMPLOYEES E WHERE E.MANAGER_ID = M.EMPLOYEE_ID);
+
+--TASK 9
+SELECT TO_DATE('25/12/2024 14:30:00', 'DD/MM/YYYY HH24:MI:SS') 
+FROM DUAL;
+
+-- TASK 10
+SELECT TO_DATE('2025-Nov-09 09:15 PM', 'YYYY-Mon-DD HH:MI AM') 
+FROM DUAL;
+
+-- TASK 11
+SELECT FIRST_NAME,LAST_NAME,SALARY,HIRE_DATE FROM HR.EMPLOYEES
+WHERE SALARY>8000 AND (DATE '2007-01-01' < HIRE_DATE)
+ORDER BY HIRE_DATE DESC;
+
+-- TASK 12
+SELECT FIRST_NAME FROM HR.EMPLOYEES
+WHERE HIRE_DATE BETWEEN (DATE '2005-01-01') AND (DATE '2005-12-31');
+
+--TASK 13
+SELECT TO_CHAR(HIRE_DATE, 'DD.MM.YYYY') FROM HR.EMPLOYEES;
+
+--TASK 14
+SELECT ADD_MONTHS(HIRE_DATE, 3) FROM HR.EMPLOYEES;
+
+--TASK 15
+SELECT FIRST_NAME,LAST_NAME,HIRE_DATE FROM HR.EMPLOYEES
+WHERE TO_CHAR(HIRE_DATE, 'FMMonth') = 'May';
